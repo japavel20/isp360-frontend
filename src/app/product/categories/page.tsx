@@ -12,7 +12,7 @@ const pageHeader = {
     breadcrumb: [
         {
             href: routes.eCommerce.dashboard,
-            name: "E-Commerce",
+            name: "Product",
         },
         {
             href: routes.eCommerce.categories,

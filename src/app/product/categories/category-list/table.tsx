@@ -3,8 +3,9 @@
 import dynamic from "next/dynamic";
 import { useColumn } from "@/hooks/use-column";
 import ControlledTable from "@/components/controlled-table";
-import { categories } from "@/app/product/categories/data/product-categories";
-import { useCallback, useMemo, useState } from "react";
+// import { categories } from "@/app/product/categories/data/product-categories";
+import { fetchCategories } from "../data";
+import { useCallback, useMemo, useState, useEffect } from "react";
 import { useTable } from "@/hooks/use-table";
 import { getColumns } from "@/app/product/categories/category-list/columns";
 // dynamic import
@@ -15,6 +16,23 @@ const TableFooter = dynamic(
 
 export default function CategoryTable() {
     const [pageSize, setPageSize] = useState(10);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function loadCategories() {
+            setLoading(true);
+            try {
+                const data = await fetchCategories();
+                setCategories(data);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            } finally {
+                setLoading(false);
+            }
+        }
+        loadCategories();
+    }, []);
 
     const onHeaderCellClick = (value: string) => ({
         onClick: () => {

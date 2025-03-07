@@ -42,20 +42,24 @@ export const getColumns = ({
         ),
     },
     {
-        title: <HeaderCell title="Image" />,
-        dataIndex: "image",
-        key: "image",
-        width: 100,
-        render: (image: any, row: any) => (
-            <figure className="relative aspect-square w-12 overflow-hidden rounded-lg bg-gray-100">
-                <Image
-                    alt={row.name}
-                    src={image}
-                    fill
-                    sizes="(max-width: 768px) 100vw"
-                    className="object-cover"
-                />
-            </figure>
+        title: (
+            <HeaderCell
+                title="Parent"
+                sortable
+                ascending={
+                    sortConfig?.direction === "asc" &&
+                    sortConfig?.key === "name"
+                }
+            />
+        ),
+        dataIndex: "name",
+        key: "name",
+        width: 200,
+        onHeaderCell: () => onHeaderCellClick("name"),
+        render: (name: string) => (
+            <Title as="h6" className="!text-sm font-medium">
+                {name}
+            </Title>
         ),
     },
     {
